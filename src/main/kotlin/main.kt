@@ -1,6 +1,7 @@
 import util.transposed
 import java.lang.Integer.max
 
+
 /**
   * Process to make a word:
   * Make a new, empty word of size 1
@@ -26,7 +27,7 @@ import java.lang.Integer.max
   *
   */
 
-class Word(private val rules: Rules<Long>) {
+class Word2(private val rules: Rules<Long>) {
     private val domain: MutableList<State<Long>> = mutableListOf()
     val size get() = domain.size
 
@@ -45,7 +46,7 @@ class Word(private val rules: Rules<Long>) {
      * Collapses the entire domain while propagating restrictions
      * @return the collapsed [Word] object
      */
-    fun collapse(): Word {
+    fun collapse(): Word2 {
         while (domain.filterIsInstance<UnobservedState<Long>>().isNotEmpty()) {
             val i = collapseNext()
             propagateRestrictions(i)

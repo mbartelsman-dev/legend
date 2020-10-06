@@ -1,36 +1,64 @@
-# LeGenD
+# Legend
 
-"**Le**xical **Gen**erator, **D**." is a vocab generator for conlangs
+"**Le**xicon **Gen**erator, **D**uh!." is a vocab generator for conlangs
 
 # Implementation
 
-- Language: class containing both rules and words, as well as construction parameters
-    - rules: rules used for word generation
-    - maxSize: max size for the dictionary
-    + dictionary: a list of all words that have been generated
-    + generateWords(): populates the dictionary up to the max
+- Language
+    + print(): String
 
-- WordBuilder(rules)
-    + build() -> Word: returns a built word, which also contains the intermediate representations
-    - ???() -> WordStructure: generates a new, empty word structure
+- Word
+    + sound: String
+    + structure: String
 
-- WordStructure(rules): A class which represents a word, in terms of syllable structures
+- Collapsible <T : Collapsible<T>>
+    + collapsed: Boolean
+    + observe(): T
+
+- WordStructure: Collapsible
+    - domain
+    - collapseNext(): Boolean
+    - expandDomain(): Unit
+    - applyRestriction(): Boolean
+    + toWordSounds(): WordSounds
+    + toString(): String
+
+- WordSounds: Collapsible
+    - domain
+    - collapseNext(): Boolean
+    - applyRestriction(): Boolean
+    + toString(): String
+
+- QuantumState<T>: Collapsible
+    + entropy: Double
 
 # Word building algorithm
+
+index, element
+
+collapseElement(index/element)
+elementScope(element) -> Pair<Int, Int>
+growDomain(index, left, right) -> Int (new index)
+left..right.foreach{ 
+    restrictionsAt(element, it) -> Map<Long, Double>
+    applyRestrictions(it - left, restriction) -> Boolean (valid word)
+}
+
+getStatesFor(x, -1).
 
 1. Start with an empty state list
 2. Add a single "total set" state, holding all possible syllable structures
 3. Collapse said state
 4. Propagate the rules
-    1. Transpose all rules with the collapsed value as a pivot, if a rule contains the value more than once, then duplicate it
-        1. Align lists on x all possible values of x
-        2. Transpose them
-        3. Turn them into sets
-    2. Intersect the state sets with each respective set that resulted from the previous operation.
-        If there's no set, add a new one with the result.
-        If the result is the empty set, reject the word
 5. Select the state with the lowest entropy
 6. Repeat 3, 4, and 5 until finished
+7. Convert the domain of structures into a domain of sounds
+8. Select the state with the lowest entropy
+9. Collapse said state
+10. Propagate the restrictions to clusters
+11. Repeat 8, 9, and 10 until finished
+12. Convert domain to string
+13. Apply any rewrite rules
 
 ```
 < set of syllable structures > :: collapse
