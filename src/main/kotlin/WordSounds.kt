@@ -1,4 +1,7 @@
-class WordSounds : CollapsibleCollection<QuantumState<Long>, WordSounds>() {
+/**
+ * Class that represents a word of unobserved phonemic values
+ */
+class WordSounds : CollapsibleCollection<Long>() {
 
     override val domain: List<QuantumState<Long>>
         get() = TODO("Not yet implemented")
