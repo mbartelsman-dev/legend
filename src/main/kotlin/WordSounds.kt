@@ -14,7 +14,7 @@ class WordSounds : CollapsibleCollection<Long>() {
         TODO("Not yet implemented")
     }
 
-    override fun applyRestriction(): Boolean {
+    override fun applyRestrictions(element: Long, index: Int): Boolean {
         TODO("Not yet implemented")
     }
 

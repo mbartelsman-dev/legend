@@ -1,6 +1,4 @@
 import util.transposed
-import java.lang.Integer.max
-
 
 /**
   * Process to make a word:
@@ -26,69 +24,6 @@ import java.lang.Integer.max
   *     collapse: collapses all states in the word
   *
   */
-
-class Word2(private val rules: Rules<Long>) {
-    private val domain: MutableList<State<Long>> = mutableListOf()
-    val size get() = domain.size
-
-    /**
-     * Collapses the [State] in the [domain] with the lowest entropy among all [UnobservedState].
-     * @return the index of the collapsed value, or `-1` if there are no [UnobservedState]s in the domain
-     */
-    private fun collapseNext(): Int {
-        val o = domain.filterIsInstance<UnobservedState<Long>>().minByOrNull { it.entropy }
-        val i = domain.indexOf(o as State<Long>)
-        if (i != -1) domain[i] = o.observe()
-        return i
-    }
-
-    /**
-     * Collapses the entire domain while propagating restrictions
-     * @return the collapsed [Word] object
-     */
-    fun collapse(): Word2 {
-        while (domain.filterIsInstance<UnobservedState<Long>>().isNotEmpty()) {
-            val i = collapseNext()
-            propagateRestrictions(i)
-        }
-        return this
-    }
-
-    private fun propagateRestrictions(index: Int) {
-        if (index < 0  ||  index >= domain.size  ||  domain[index] !is ObservedState) { return }
-        val obj: Long = (domain[index] as ObservedState).value
-        rules.syllableRules
-                .filter { it.contains(obj) }
-                .forEach {
-                    // TODO: Doesn't take into account that a rule can have multiple instances of the same Long
-                    val leftPad = it.indexOf(obj) - index
-                    val rightPad = (it.size - it.indexOf(obj)) - (domain.size - index)
-
-                    expandDomain(leftPad, rightPad)
-                    applyRule(it, index + max(leftPad, 0) - it.indexOf(obj))
-
-                }
-    }
-
-    private fun applyRule(rule: List<Long>, index: Int) {
-        TODO("Not yet implemented")
-    }
-
-    private fun expandDomain(left: Int, right: Int) {
-        repeat(left)  { domain.add(0, UnobservedState(rules)) }
-        repeat(right) { domain.add(UnobservedState(rules)) }
-    }
-}
-//     0 1 2 3 4 5 : index
-//           |
-//       0 1 2 3 : r
-interface Rules<T> {
-    val syllableSet: Map<T, Double>
-    val syllableRules: Set<List<T>>
-}
-
-
-
 
 fun main(args: Array<String>) {
     val t = listOf<List<Int>>(
