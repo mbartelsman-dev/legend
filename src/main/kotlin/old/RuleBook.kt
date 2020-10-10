@@ -1,3 +1,5 @@
+package old
+
 /**
  * Class describing the rules for word construction
  * @property set The set of all possible allowed values that a single element in a word can have

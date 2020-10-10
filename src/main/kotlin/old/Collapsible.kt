@@ -1,6 +1,8 @@
+package old
+
 /**
  * Interface representing an object that holds a superposition of possible values until observed.
- * The value of Collapsible objects should be immutable after observation
+ * The value of old.Collapsible objects should be immutable after observation
  * @property collapsed `true` if the object has been previously observed, otherwise `false`
  * @property value collpases the object and returns a single, definite value
  */

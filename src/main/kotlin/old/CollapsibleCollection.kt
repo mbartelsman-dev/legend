@@ -1,3 +1,5 @@
+package old
+
 /**
  * Abstract class for [Collapsible] objects made up of a collection of [Collapsible] values
  * @property domain list of [Collapsible] values representing the state of this class

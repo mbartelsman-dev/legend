@@ -1,4 +1,6 @@
-import util.chooseWeighted
+package old
+
+import old.util.chooseWeighted
 import kotlin.math.ln
 
 /**
@@ -30,7 +32,7 @@ open class QuantumState<T>(
      * @return non-negative entropy value
      */
     private fun calculateEntropy(): Double {
-        check(values.values.all { it >= 0.0 }) { "Negative weight found. All weights for a QuantumState must be non-negative." }
+        check(values.values.all { it >= 0.0 }) { "Negative weight found. All weights for a old.QuantumState must be non-negative." }
         val weights = values.values
         val sumN = weights.sum()
         val sumNLogN = weights.sumByDouble { it * ln(it) }

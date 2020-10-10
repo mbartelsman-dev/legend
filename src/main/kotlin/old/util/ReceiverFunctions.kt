@@ -1,7 +1,6 @@
-package util
+package old.util
 
 import java.util.*
-import kotlin.math.ln
 
 /**
  * Uses the values of the map as weights and chooses a random key

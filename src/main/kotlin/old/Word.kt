@@ -1,2 +1,4 @@
+package old
+
 class Word {
 }
