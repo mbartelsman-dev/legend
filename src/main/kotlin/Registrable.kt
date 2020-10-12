@@ -29,7 +29,12 @@ sealed class Token : Registrable() {
             override val id: String,
             val structure: List<String>,
             val weight: Double = 1.0
-    ) : Token()
+    ) : Token() {
+        companion object {
+            val INIT: Syllable = Syllable("<int>", listOf())
+            val LAST: Syllable = Syllable("<fin>", listOf())
+        }
+    }
 
 
     /**

@@ -6,7 +6,7 @@ internal class RulesTest {
 
     @Test
     fun rulesTest() {
-        val rules = Rules("Noun")
+        val ruleBuilder = Rules.Builder("Noun")
         listOf<Registrable>(
                 Token.Sound("p"),
                 Token.Sound("t"),
@@ -15,17 +15,20 @@ internal class RulesTest {
                 Token.SoundClass("V", listOf("a")),
                 Token.Syllable("S1", listOf("C", "V")),
                 Token.Syllable("S2", listOf("C", "V", "C")),
-                Pattern("<init>", "S1"),
+                Pattern(Token.Syllable.INIT.id, "S1"),
                 Pattern("S1", "S2"),
-                Pattern("S2", "<fin>"),
+                Pattern("S2", Token.Syllable.LAST.id),
                 Cluster(listOf("t", "a", "t"))
         ).forEach {
-            rules.register(it)
+            ruleBuilder.register(it)
         }
-        assertFails { rules.register(Token.SoundClass("K", listOf("h"))) }
-        assertFails { rules.register(Token.Syllable("S3", listOf("K"))) }
-        assertFails { rules.register(Pattern("S3", "S1")) }
-        assertFails { rules.register(Cluster(listOf("h", "a", "h"))) }
+
+        assertFails { ruleBuilder.register(Token.SoundClass("K", listOf("h"))) }
+        assertFails { ruleBuilder.register(Token.Syllable("S3", listOf("K"))) }
+        assertFails { ruleBuilder.register(Pattern("S3", "S1")) }
+        assertFails { ruleBuilder.register(Cluster(listOf("h", "a", "h"))) }
+
+        val rules = ruleBuilder.build()
 
         assertEquals(mapOf(
                 "p" to Token.Sound("p"),
@@ -58,7 +61,7 @@ internal class RulesTest {
 
     @Test
     fun getId() {
-        val rules = Rules("test")
-        assertEquals("test", rules.id)
+        val rules = Rules.Builder("test")
+        assertEquals("test", rules.build().id)
     }
 }
